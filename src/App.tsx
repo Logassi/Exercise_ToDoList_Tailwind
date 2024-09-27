@@ -8,16 +8,16 @@ function App() {
     <div id='container'>
       <h1>Chores ToDo List</h1>
       <div id='todoList'>
-        <TodoListComponent/>
-        <TodoListComponent/>
-        <TodoListComponent/>
+        <TodoListComponent task = "Reading"/>
+        <TodoListComponent task = "Walking"/>
+        <TodoListComponent task = "Sleeping"/>
       </div>
       
       <div id='contentAddTodo'>
           <p>Done Counter : 0 / 0</p>
           <div>
             <p>Add ToDo</p>
-            <input/>
+            <input type='text'/>
             <button>Add Task</button>
           </div>
       </div>
