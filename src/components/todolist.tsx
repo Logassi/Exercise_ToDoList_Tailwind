@@ -5,20 +5,11 @@ import { ITask } from './types';
 
 function TodoList() {
     
-    // const state = {
-    //     todoList : [
-    //       "Reading",
-    //       "Walking",
-    //       "Sleeping",
-    //       "Makan Nasi Padang"
-    //     ]
-    //   }
-
     const inputRef = useRef<HTMLInputElement>(null);
     const [todoList, setTodoList] = useState<ITask[]>([]);
 
     const addTodo = () => {
-        const inputText =  inputRef.current?.value.trim() ;
+        const inputText : string =  inputRef.current?.value.trim() || "";
         // console.log(inputText);
 
         if(inputText === ""){
@@ -27,8 +18,10 @@ function TodoList() {
 
         const newTodo : ITask = {
             id : Date.now(),
-            text : inputText,
-            isCompleteCheck : false
+            task : inputText,
+            isCompleteCheck : false,
+            deleteTodo : deleteTodo,
+            onToggleCompletion : toggleCompletion 
         }
 
         setTodoList((prev) => [...prev, newTodo]);
@@ -40,11 +33,19 @@ function TodoList() {
           
 
     }
+
+    const deleteTodo = (id : number) => {
+        setTodoList((prvTodo) => {
+           return prvTodo.filter((todo) => todo.id !== id)
+        })
+    }
+
+    
     
     const renderAddTodo = () => {
         return (
             <div>
-                <p>Done Counter : 0 / 0</p>
+                <p>Done Counter : {todoList.filter(todo => todo.isCompleteCheck).length} / {todoList.length}</p>
                 <div>
                     <p>Add ToDo</p>
                     <input ref={inputRef} type='text'/>
@@ -54,34 +55,41 @@ function TodoList() {
         )
     }
     
+    const toggleCompletion = (id: number) => {
+        setTodoList((prevTodo) => {
+            return prevTodo.map((todo) =>
+                todo.id === id ? { ...todo, isCompleteCheck: !todo.isCompleteCheck } : todo
+            );
+        });
+    };
     
     function renderTodoList(){
-        return todoList.map((val, index) => {
+        return todoList.map((item, index) => {
           return(
-            <TodoItem key={index} task = {val.text}/>
+            <TodoItem 
+                key={index} 
+                task = {item.task} 
+                id={item.id} 
+                isCompleteCheck={item.isCompleteCheck} 
+                deleteTodo={deleteTodo}
+                onToggleCompletion={toggleCompletion}
+                />
           )
         })
       }
     
-      
-    
-    
-
-
     return (
     <div>
         <h1>Chores ToDo List</h1>   
-      <div id='todoList'>
-        {
-            renderTodoList()
-        }
-      </div>
-      
-      <div id='contentAddTodo'>
-        {
-            renderAddTodo()
-        }
-      </div>
+        
+        <div id='contentAddTodo'>
+            {renderAddTodo()}
+        </div>    
+
+
+        <div id='todoList'>
+            {renderTodoList()}
+        </div>
     </div>
   )
 }

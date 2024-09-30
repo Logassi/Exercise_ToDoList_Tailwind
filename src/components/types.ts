@@ -1,5 +1,7 @@
 export interface ITask {
-    id : Date,
+    id : number,
     task : string,
     isCompleteCheck : boolean
+    deleteTodo: (id: number) => void;
+    onToggleCompletion: (id: number) => void;
 }
