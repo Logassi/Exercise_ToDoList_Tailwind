@@ -1,3 +1,5 @@
 export interface ITask {
-    task : string;
+    id : Date,
+    task : string,
+    isCompleteCheck : boolean
 }
