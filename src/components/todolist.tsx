@@ -46,11 +46,12 @@ function TodoList() {
         return (
             <div>
                 <p>Done Counter : {todoList.filter(todo => todo.isCompleteCheck).length} / {todoList.length}</p>
-                <div>
-                    <p>Add ToDo</p>
-                    <input ref={inputRef} type='text'/>
-                    <button onClick={addTodo}>Add Task</button>
+                <p>Add ToDo</p>
+                <div className='flex items-center my-3 bg-gray-300 rounded-full'>
+                    <input ref={inputRef} type='text' placeholder='Type your Task here' className='bg-transparent border-0 outline-none flex-1 h-14 pl-6 pr-2 placeholder:text-slate-600' />
+                    <button onClick={addTodo} className='border-none rounded-full bg-gray-700 w-32 h-14 text-white text-lg font-medium cursor-pointer'>Add Task</button>
                 </div>
+
             </div>
         )
     }
@@ -79,15 +80,19 @@ function TodoList() {
       }
     
     return (
-    <div>
-        <h1>Chores ToDo List</h1>   
+    <div className='bg-white place-self-center w-11/12 max-w-md flex flex-col p-7 min-h-[550px] rounded-xl'>
         
-        <div id='contentAddTodo'>
+        <div className='flex items-center mt-7 gap-2'>
+            {/* <img className="w-8"/> */}
+            <h1 className='text-3xl font-semibold'>Chores ToDo List</h1>   
+        </div>
+
+        <div>
             {renderAddTodo()}
         </div>    
 
 
-        <div id='todoList'>
+        <div>
             {renderTodoList()}
         </div>
     </div>
